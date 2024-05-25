@@ -12,4 +12,6 @@ The documentation for this project includes the following components:
 4. **System Flowcharts**: Depicts the workflow and processes within the system.
 5. **Database Structure**: Details the database schema and tables.
 6. **Backend Functionality**: Describes the backend logic and functionalities.
-7. **Integration MQTT with MWBOTS**: Explains how MQTT is integrated with mobile wireless bots (MWBOTS).
+7. **Integration MQTT with MWBOTS**: Explains how MQTT is integrated with mobile wireless bots (MWBOTS)
+
+## Backend Installation Steps:
