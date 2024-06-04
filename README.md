@@ -2,7 +2,7 @@
 
 This project involves developing a parking management system with mobile wireless chargers for electric cars.
 
-## Documentation
+# Documentation
 
 The documentation for this project includes the following components:
 
@@ -14,4 +14,13 @@ The documentation for this project includes the following components:
 6. **Backend Functionality**: Describes the backend logic and functionalities.
 7. **Integration MQTT with MWBOTS**: Explains how MQTT is integrated with mobile wireless bots (MWBOTS)
 
-## Backend Installation Steps:
+# Backend Installation Steps:
+
+## Installation
+
+    pip install -r requirements.txt
+
+## Usage
+
+    python manage.py makemigrations api
+    python manage.py migrate
