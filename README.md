@@ -20,7 +20,7 @@ The documentation for this project includes the following components:
 
     pip install -r requirements.txt
 
-## Usage
+# Usage
 
     python manage.py makemigrations api
     python manage.py migrate
