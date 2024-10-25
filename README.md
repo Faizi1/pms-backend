@@ -24,3 +24,5 @@ The documentation for this project includes the following components:
 
     python manage.py makemigrations api
     python manage.py migrate
+
+    
