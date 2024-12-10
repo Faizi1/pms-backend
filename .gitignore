@@ -1,7 +1,6 @@
 .DS_Store
 venv
 venv/
-env
 
 # Editor directories and files
 .idea
@@ -68,7 +67,6 @@ docs/_build/
 *.sqlite3
 
 # migrations folder for api App
-migrations
-
-# media
-/media
+api/migrations
+/media/petition_images/
+/media/profile_images/

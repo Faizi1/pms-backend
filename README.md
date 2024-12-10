@@ -1,4 +1,4 @@
-# Parking Management Backend
+# Backend
 
 This project involves developing a parking management system with mobile wireless chargers for electric cars.
 
@@ -20,9 +20,10 @@ The documentation for this project includes the following components:
 
     pip install -r requirements.txt
 
-# Usage
+## Usage
 
     python manage.py makemigrations api
     python manage.py migrate
-
-    
+    python add_permission.py
+    python populate.py
+    python manage.py runserver
