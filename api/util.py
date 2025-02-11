@@ -47,5 +47,3 @@ def combine_role_permissions(role):
         permissions[permission.code_name] = True
 
     return permissions
-
-a = 1
