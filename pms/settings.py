@@ -99,7 +99,7 @@ DATABASES = {
     # },
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'parking_management_system',
+        'NAME': 'parking_system',
         'USER': 'postgres',
         'PASSWORD': 'admin',
         'HOST': 'localhost',
@@ -221,3 +221,7 @@ MASTER_PASSWORD = 'ch!ltan@ag'
 AG_MASTER_PASSWORD = 'ag@ch!ltan'
 
 DD_MASTER_PASSWORD = 'dd@ch!ltan'
+
+# MQTT Broker Configuration
+MQTT_BROKER = "mqtt.eclipse.org"  # Change this if using a local broker
+MQTT_PORT = 1883

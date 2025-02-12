@@ -41,6 +41,7 @@ def unset_cookies(response):
 
 def combine_role_permissions(role):
     permissions = {}
+    print('role', role)
 
     role_permissions = role.permissions.all()
     for permission in role_permissions:

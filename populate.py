@@ -9,8 +9,7 @@ django.setup()
 
 from django.utils import timezone
 
-from api.models import User, Role, Permission, Organization, PetitionType, RankType, Prefix, Priority, Category, \
-    PetitionDetailType, PetitionDetailStatus
+from api.models import User, Role, Permission
 
 users = [
     {
@@ -56,7 +55,6 @@ def populate():
         )
         user.name = 'Superuser'
         user.role = Role.objects.get(code_name='su')
-        user.organization = Organization.objects.get(name='AG Branch')
         user.save()
 
     for role in roles:

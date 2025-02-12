@@ -19,6 +19,11 @@ permissions = [
     Permission(name='Update User', code_name='user_update', module_name='User', description='User can update user'),
     Permission(name='Show User', code_name='user_show', module_name='User', description='User can show user'),
 
+    # Dashboard
+    Permission(name='Show Dashboard', code_name='dashboard_show', module_name='Dashboard', description='User can show dashboard'),
+    Permission(name='Show Case', code_name='show_case', module_name='Case', description='User can view case'),
+
+
 ]
 
 

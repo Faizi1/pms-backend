@@ -12,7 +12,6 @@ class LogoutView(APIView):
 
     def post(self, request):
         data = request.COOKIES
-
         refresh_token = data.get('refresh_token', None)
 
         try:
@@ -21,6 +20,7 @@ class LogoutView(APIView):
             return Response({'msg': 'Bad token'}), 400
 
         response = Response()
+        print('response', response)
         unset_cookies(response)
         response.data = {"msg": "Logout successfully"}
         response.status_code = status.HTTP_204_NO_CONTENT
