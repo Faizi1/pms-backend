@@ -1,3 +1,7 @@
 from .user_serializer import UserSerializer
 from .role_serializer import RoleSerializer
 from .permission_serializer import PermissionSerializer
+from .charging_request_serializer import ChargingRequestSerializer
+from .parking_serializer import ParkingSpotSerializer
+from .reservation_serializer import ReservationSerializer
+from .payment_serializer import PaymentSerializer

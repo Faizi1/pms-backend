@@ -14,12 +14,9 @@ def get_user_data(user):
     data = {
         'id': user.id,
         'organization_id': user.organization.id,
-        'organization': user.organization.name,
         'username': user.username,
         'name': user.name,
         'role': user.role.code_name if user.role else None,
         'role_id': user.role.id if user.role else None,
-        'appointment_id': user.appointment_id,
-        'appointment_name': user.appointment_name,
     }
     return data

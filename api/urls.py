@@ -7,7 +7,10 @@ routers = DefaultRouter()
 routers.register('roles', views.RoleViewSet, basename='role')
 routers.register('users', views.UserViewSet, basename='user')
 routers.register('users-unpaginated', views.UserListViewSet, basename='user')
-
+routers.register('parking-spots', views.ParkingSpotViewSet, basename='parking-spot')
+routers.register('reservations', views.ReservationViewSet, basename='reservation')
+routers.register('charging-requests', views.ChargingRequestViewSet, basename='charging-request')
+# router.register('payments', views.PaymentViewSet, basename='payment')
 
 urlpatterns = [
     path('login', views.LoginView.as_view()),

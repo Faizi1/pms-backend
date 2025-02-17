@@ -43,10 +43,8 @@ class RoleSerializer(serializers.ModelSerializer):
         user = User.objects.get(pk=obj.created_by.id)
         data = {
             'id': user.id,
-            'organization': user.organization.name,
             'username': user.username,
             'name': user.name,
-            'appointment_name': user.appointment_name,
         }
         return data
 
@@ -57,9 +55,7 @@ class RoleSerializer(serializers.ModelSerializer):
         user = User.objects.get(pk=obj.updated_by.id)
         data = {
             'id': user.id,
-            'organization': user.organization.name,
             'username': user.username,
             'name': user.name,
-            'appointment_name': user.appointment_name,
         }
         return data

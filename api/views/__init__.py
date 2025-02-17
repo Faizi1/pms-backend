@@ -7,3 +7,7 @@ from .permission_list_view import PermissionListView
 from .user_view_set import UserViewSet
 from .user_list_view_set import UserListViewSet
 from .logged_in_user import LoggedInUser
+from .parking_spot_view import ParkingSpotViewSet
+from .reservation_view import ReservationViewSet
+from .charging_req_view import ChargingRequestViewSet
+from .payment_view import PaymentViewSet

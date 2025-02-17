@@ -148,6 +148,7 @@ MEDIA_URL = '/pms/media/'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny',
         'rest_framework.permissions.IsAuthenticated'
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -223,5 +224,6 @@ AG_MASTER_PASSWORD = 'ag@ch!ltan'
 DD_MASTER_PASSWORD = 'dd@ch!ltan'
 
 # MQTT Broker Configuration
-MQTT_BROKER = "mqtt.eclipse.org"  # Change this if using a local broker
+# MQTT_BROKER = "mqtt.eclipse.org"  # Change this if using a local broker
+MQTT_BROKER = "localhost"
 MQTT_PORT = 1883

@@ -28,7 +28,7 @@ roles = [
         'name': 'NormalUser',
         'code_name': 'nu',
         'permissions': [
-                'user_read', 'role_read',
+                'user_read', 'read_role',
         ]
     },
 ]

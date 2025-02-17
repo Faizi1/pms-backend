@@ -21,20 +21,21 @@ class UserViewSet(mixins.ListModelMixin,
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = UserFilter
 
-    @route_permissions(['user_read'])
+    @route_permissions(['read_user'])
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
 
-    @route_permissions(['user_read'])
+    @route_permissions(['read_user'])
     def retrieve(self, request, *args, **kwargs):
         return super().retrieve(request, *args, **kwargs)
 
-    @route_permissions(['user_update'])
+    @route_permissions(['update_user'])
     def update(self, request, *args, **kwargs):
+        
         Logs.objects.create(text='User updated', created_by=request.user)
         return super().update(request, *args, **kwargs)
 
-    @route_permissions(['user_update'])
+    @route_permissions(['update_user'])
     def partial_update(self, request, *args, **kwargs):
         Logs.objects.create(text='User updated', created_by=request.user)
         return super().partial_update(request, *args, **kwargs)
