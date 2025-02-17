@@ -12,4 +12,4 @@ class ParkingSpot(models.Model):
     updated_by = models.ForeignKey('User', related_name='+', blank=True, null=True, on_delete=models.DO_NOTHING)
 
     def __str__(self):
-        return f"Spot {self.number} - {'Reserved' if self.is_reserved else 'Available'}"
+        return f"Spot {self.spot_id} - {'Reserved' if self.is_occupied else 'Available'}"

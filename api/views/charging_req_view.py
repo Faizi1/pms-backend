@@ -6,6 +6,8 @@ from api.serializers import ChargingRequestSerializer
 import paho.mqtt.publish as mqtt_publish
 from rest_framework.permissions import AllowAny, IsAuthenticated
 import json
+from django_filters import rest_framework as filters
+from api.filters import ChargingRequestFilter
 
 
 MQTT_BROKER = "localhost"
@@ -17,6 +19,8 @@ class ChargingRequestViewSet(viewsets.ModelViewSet):
     permission_classes = (AllowAny,)
     queryset = ChargingRequest.objects.all()
     serializer_class = ChargingRequestSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = ChargingRequestFilter
 
     def create(self, request, *args, **kwargs):
         user_id = request.data.get('user')
@@ -42,8 +46,8 @@ class ChargingRequestViewSet(viewsets.ModelViewSet):
             return Response({"error": "Spot is occupied"}, status=status.HTTP_400_BAD_REQUEST)
 
         # Check if the user already requested the same spot
-        # if ChargingRequest.objects.filter(user=user, spot=spot).exists():
-        #     return Response({"error": "You already have a charging request for this spot"}, status=status.HTTP_400_BAD_REQUEST)
+        if ChargingRequest.objects.filter(user=user, spot=spot).exists():
+            return Response({"error": "You already have a charging request for this spot"}, status=status.HTTP_400_BAD_REQUEST)
 
         # Create Charging Request
         charging_request = ChargingRequest(user=user, spot=spot, car_model=car_model, battery_capacity=battery_capacity, duration=duration, bot_id=1)

@@ -26,7 +26,9 @@ SECRET_KEY = 'django-insecure-ryc6^6npdob6o8_t6-kas1pm#@bhc=21w)@w0a$t0z(($osp@9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost"]
+# ALLOWED_HOSTS = ["*", "localhost"]
+ALLOWED_HOSTS = ['192.168.18.177', '0.0.0.0', '*']
+
 
 # Application definition
 
@@ -64,7 +66,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8080", "http://localhost:8082", "http://localhost:8081",
+    "http://localhost:8080", "http://localhost:8082", "http://localhost:8081","http://192.168.18.177:8082", "http://192.168.18.177:8080", "http://192.168.18.177:8081"
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -148,7 +150,6 @@ MEDIA_URL = '/pms/media/'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.AllowAny',
         'rest_framework.permissions.IsAuthenticated'
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -201,7 +202,7 @@ CSRF_COOKIE_SAMESITE = 'Lax'
 CSRF_COOKIE_HTTPONLY = False
 
 CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:8080", "http://localhost:8081", "http://localhost:8082"
+    "http://localhost:8080", "http://localhost:8081", "http://localhost:8082", "http://192.168.18.177:8082"
 ]
 
 # Default primary key field type

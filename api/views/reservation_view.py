@@ -4,10 +4,16 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 from api.models import Reservation, User, ParkingSpot
 from api.serializers import ReservationSerializer
+from rest_framework.permissions import  AllowAny, IsAuthenticated
+from django_filters import rest_framework as filters
+from api.filters import ReservationFilter
 
 class ReservationViewSet(viewsets.ModelViewSet):
+    permission_classes = (AllowAny,)
     queryset = Reservation.objects.all()
     serializer_class = ReservationSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = ReservationFilter
 
     def create(self, request, *args, **kwargs):
         user_id = request.data.get('user')

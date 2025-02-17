@@ -9,8 +9,8 @@ from api.filters import ParkingSpotFilter
 
 
 class ParkingSpotViewSet(viewsets.ModelViewSet):
-    # permission_classes = (AllowAny,)
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (AllowAny,)
+    # permission_classes = (IsAuthenticated, )
     queryset = ParkingSpot.objects.order_by('id')
     serializer_class = ParkingSpotSerializer
     filter_backends = (filters.DjangoFilterBackend,)
