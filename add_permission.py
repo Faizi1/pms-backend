@@ -111,6 +111,12 @@ permissions = [
         description="User can show charging requests",
     ),
     Permission(
+        name="Read Charging Requests",
+        code_name="read_charging_request",
+        module_name="Charging Request",
+        description="User can read charging requests",
+    ),
+    Permission(
         name="Create Charging Request",
         code_name="create_charging_request",
         module_name="Charging Request",
@@ -134,6 +140,12 @@ permissions = [
         code_name="show_reservations",
         module_name="Reservation",
         description="User can show reservations",
+    ),
+    Permission(
+        name="Read Reservations",
+        code_name="read_reservation",
+        module_name="Reservation",
+        description="User can read reservations",
     ),
     Permission(
         name="Create Reservation",

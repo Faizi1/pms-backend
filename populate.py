@@ -1,15 +1,13 @@
 import os
-
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pms.settings")
-
 import django
 
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pms.settings")
 django.setup()
 
 from django.utils import timezone
-
 from api.models import Permission, Role, User
 
+# Define users
 users = [
     {
         "id": 1,
@@ -17,7 +15,7 @@ users = [
         "name": "Faiz",
         "profile_status": "Current",
         "is_delete": "No",
-        "role": "nu",
+        "role": "basic",
     },
     {
         "id": 2,
@@ -25,7 +23,7 @@ users = [
         "name": "Alex",
         "profile_status": "Current",
         "is_delete": "No",
-        "role": "nu",
+        "role": "premium",
     },
     {
         "id": 3,
@@ -33,21 +31,19 @@ users = [
         "name": "Test",
         "profile_status": "Current",
         "is_delete": "No",
-        "role": "nu",
+        "role": "basic",
     },
 ]
 
+# Define roles and permissions
 roles = [
     {
         "name": "Basic",
         "code_name": "basic",
         "permissions": [
-            # dashboard
             "dashboard_show",
-            # parking_spot,
             "show_parking_spots",
             "read_parking_spot",
-            # charging requests
             "show_charging_requests",
             "create_charging_request",
             "read_charging_request",
@@ -59,18 +55,14 @@ roles = [
         "name": "Premium",
         "code_name": "premium",
         "permissions": [
-            # dashboard
             "dashboard_show",
-            # parking_spot,
             "show_parking_spots",
             "read_parking_spot",
-            # charging requests
             "show_charging_requests",
             "create_charging_request",
             "read_charging_request",
             "update_charging_request",
             "delete_charging_request",
-            # reservations
             "show_reservations",
             "create_reservation",
             "read_reservation",
@@ -80,59 +72,69 @@ roles = [
     },
 ]
 
-
 def populate():
-    permissions = Permission.objects.all()
+    print("Starting PMS population script...")
 
-    try:
-        role = Role.objects.get(code_name="su")
-        role.permissions.clear()
-    except Role.DoesNotExist:
-        role = Role.objects.create(name="SuperUser", code_name="su")
+    # Fetch all permissions into a dictionary for quick lookup
+    existing_permissions = {p.code_name: p for p in Permission.objects.all()}
 
-    role.permissions.add(*permissions)
-    role.save()
+    # Ensure SuperUser Role exists
+    su_role, _ = Role.objects.get_or_create(name="SuperUser", code_name="su")
+    su_role.permissions.set(existing_permissions.values())  # Assign all permissions
+    su_role.save()
 
-    try:
-        user = User.objects.get(username="superuser")
-    except User.DoesNotExist:
-        user = User.objects.create_superuser(
-            id=999,
-            username="superuser",
-            password="123",
+    # Ensure superuser exists
+    superuser, created = User.objects.get_or_create(
+        id=999, username="superuser", defaults={"name": "Superuser"}
+    )
+    if created:
+        superuser.set_password("123")
+    superuser.role = su_role
+    superuser.save()
+
+    # Populate roles and permissions
+    for role_data in roles:
+        role, created = Role.objects.get_or_create(
+            code_name=role_data["code_name"],
+            defaults={
+                "name": role_data["name"],
+                "created_by": superuser,
+                "updated_by": superuser,
+            },
         )
-        user.name = "Superuser"
-        user.role = Role.objects.get(code_name="su")
-        user.save()
 
-    for role in roles:
+        missing_perms = []
+        for perm_code in role_data["permissions"]:
+            if perm_code in existing_permissions:
+                role.permissions.add(existing_permissions[perm_code])
+            else:
+                missing_perms.append(perm_code)
+
+        if missing_perms:
+            print(f"Warning: Some permissions not found for role '{role.code_name}': {missing_perms}")
+
+        role.save()
+
+    # Populate users
+    for user_data in users:
         try:
-            Role.objects.get(code_name=role["code_name"])
+            user_role = Role.objects.get(code_name=user_data["role"])
         except Role.DoesNotExist:
-            r = Role.objects.create(
-                name=role["name"],
-                code_name=role["code_name"],
-                created_by=User.objects.get(username="superuser"),
-                updated_by=User.objects.get(username="superuser"),
-            )
-            for permission in role["permissions"]:
-                r.permissions.add(Permission.objects.get(code_name=permission))
-            r.save()
+            print(f"Warning: Role '{user_data['role']}' does not exist. Skipping user '{user_data['username']}'")
+            continue
 
-    for user in users:
-        try:
-            User.objects.get(id=user["id"])
-        except User.DoesNotExist:
-            User.objects.create(
-                id=user["id"],
-                username=user["username"],
-                name=user["name"],
-                profile_status=user["profile_status"],
-                is_delete=user["is_delete"],
-                role=Role.objects.get(code_name=user["role"]),
-            )
+        User.objects.update_or_create(
+            id=user_data["id"],
+            defaults={
+                "username": user_data["username"],
+                "name": user_data["name"],
+                "profile_status": user_data["profile_status"],
+                "is_delete": user_data["is_delete"],
+                "role": user_role,
+            },
+        )
 
+    print("PMS population script completed successfully!")
 
 if __name__ == "__main__":
-    print("Starting PMS population script...")
     populate()

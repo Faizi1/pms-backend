@@ -28,7 +28,7 @@ class ReservationViewSet(viewsets.ModelViewSet):
         # Check if the user is premium
         print("user:", user)
         print("user.role:", user.role)
-        if not user.role.code_name == "premium":
+        if not (user.role.code_name == "premium" or user.role.code_name == "su"):
             return Response(
                 {"error": "Only premium users can reserve spots"},
                 status=status.HTTP_403_FORBIDDEN,

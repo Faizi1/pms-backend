@@ -5,7 +5,7 @@ from django.db import models
 class ChargingRequest(models.Model):
     user = models.ForeignKey("User", on_delete=models.DO_NOTHING)
     spot = models.ForeignKey("ParkingSpot", on_delete=models.DO_NOTHING)
-    bot_id = models.IntegerField(null=True, blank=True)
+    bot_id = models.IntegerField(default=1, null=True, blank=True)
     car_model = models.CharField(max_length=100)
     battery_capacity = models.FloatField()
     duration = models.PositiveIntegerField()
