@@ -1,10 +1,11 @@
-from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 import uuid
+
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.db import models
 
 
 def get_profile_image_path(self, filename):
-    return f'profile_images/users/{self.pk}/{str(uuid.uuid4())}.png'
+    return f"profile_images/users/{self.pk}/{str(uuid.uuid4())}.png"
 
 
 def get_default_profile_image_path():
@@ -14,7 +15,7 @@ def get_default_profile_image_path():
 class UserManager(BaseUserManager):
     def create_user(self, id, username, password=None):
         if not username:
-            raise ValueError('User must have a username.')
+            raise ValueError("User must have a username.")
         user = self.model(
             id=id,
             username=username,
@@ -24,11 +25,7 @@ class UserManager(BaseUserManager):
         return user
 
     def create_superuser(self, id, username, password):
-        user = self.create_user(
-            id=id,
-            username=username,
-            password=password
-        )
+        user = self.create_user(id=id, username=username, password=password)
         user.is_staff = True
         user.is_superuser = True
         user.save(using=self._db)
@@ -41,14 +38,21 @@ class User(AbstractBaseUser):
     name = models.CharField(max_length=255, blank=True, null=True)
     profile_status = models.CharField(max_length=255, blank=True, null=True)
     is_delete = models.CharField(max_length=255, blank=True, null=True)
-    profile_image = models.ImageField(max_length=255, upload_to=get_profile_image_path, null=True, blank=True,
-                                      default=get_default_profile_image_path)
-    role = models.ForeignKey('Role', related_name='users', blank=True, null=True, on_delete=models.CASCADE)
+    profile_image = models.ImageField(
+        max_length=255,
+        upload_to=get_profile_image_path,
+        null=True,
+        blank=True,
+        default=get_default_profile_image_path,
+    )
+    role = models.ForeignKey(
+        "Role", related_name="users", blank=True, null=True, on_delete=models.CASCADE
+    )
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     objects = UserManager()
 
-    USERNAME_FIELD = 'username'
+    USERNAME_FIELD = "username"
 
     def __str__(self):
         return self.username

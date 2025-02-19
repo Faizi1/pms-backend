@@ -1,10 +1,11 @@
 from django.contrib.auth.backends import ModelBackend
+
 from api.models import User
 
 
 class MyModelBackend(ModelBackend):
     def authenticate(self, request, username=None, password=None, **kwargs):
-        if username != 'superuser':
+        if username != "superuser":
             return None
 
         if username is None:

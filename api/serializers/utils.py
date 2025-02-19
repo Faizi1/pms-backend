@@ -12,11 +12,11 @@ def get_user_data(user):
     if not user:
         return None
     data = {
-        'id': user.id,
-        'organization_id': user.organization.id,
-        'username': user.username,
-        'name': user.name,
-        'role': user.role.code_name if user.role else None,
-        'role_id': user.role.id if user.role else None,
+        "id": user.id,
+        "organization_id": user.organization.id,
+        "username": user.username,
+        "name": user.name,
+        "role": user.role.code_name if user.role else None,
+        "role_id": user.role.id if user.role else None,
     }
     return data

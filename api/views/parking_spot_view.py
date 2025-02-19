@@ -1,17 +1,18 @@
-from rest_framework import viewsets, status
-from rest_framework.response import Response
+from django_filters import rest_framework as filters
+from rest_framework import status, viewsets
 from rest_framework.decorators import action
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.response import Response
+
+from api.filters import ParkingSpotFilter
 from api.models import ParkingSpot
 from api.serializers import ParkingSpotSerializer
-from rest_framework.permissions import  AllowAny, IsAuthenticated
-from django_filters import rest_framework as filters
-from api.filters import ParkingSpotFilter
 
 
 class ParkingSpotViewSet(viewsets.ModelViewSet):
     permission_classes = (AllowAny,)
     # permission_classes = (IsAuthenticated, )
-    queryset = ParkingSpot.objects.order_by('id')
+    queryset = ParkingSpot.objects.order_by("id")
     serializer_class = ParkingSpotSerializer
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = ParkingSpotFilter

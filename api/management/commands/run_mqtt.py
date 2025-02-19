@@ -1,8 +1,11 @@
 import json
+
 import paho.mqtt.client as mqtt
-from django.core.management.base import BaseCommand
 from django.conf import settings
+from django.core.management.base import BaseCommand
+
 from api.models import ChargingRequest
+
 
 class Command(BaseCommand):
     help = "Start MQTT client to listen for MWBot status updates"
@@ -19,14 +22,22 @@ class Command(BaseCommand):
             spot_id = payload.get("spotID")
 
             try:
-                charging_request = ChargingRequest.objects.filter(bot_id=bot_id, spot_id=spot_id).first()
+                charging_request = ChargingRequest.objects.filter(
+                    bot_id=bot_id, spot_id=spot_id
+                ).first()
                 charging_request.status = status
                 charging_request.save()
-                self.stdout.write(self.style.SUCCESS(
-                    f"Updated Charging Request {charging_request.id} → Status: {status}"
-                ))
+                self.stdout.write(
+                    self.style.SUCCESS(
+                        f"Updated Charging Request {charging_request.id} → Status: {status}"
+                    )
+                )
             except ChargingRequest.DoesNotExist:
-                self.stdout.write(self.style.WARNING(f"No Charging Request found for MWbot ID {bot_id}"))
+                self.stdout.write(
+                    self.style.WARNING(
+                        f"No Charging Request found for MWbot ID {bot_id}"
+                    )
+                )
 
         mqtt_client = mqtt.Client()
         mqtt_client.on_connect = on_connect

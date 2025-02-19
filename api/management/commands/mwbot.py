@@ -1,12 +1,14 @@
-from django.core.management.base import BaseCommand
-import paho.mqtt.client as mqtt
 import json
-import time
 import random
+import time
+
+import paho.mqtt.client as mqtt
+from django.core.management.base import BaseCommand
+
 
 class Command(BaseCommand):
     help = "Starts the Dummy MWbot for handling parking spot dispatches"
-    
+
     BOT_ID = 1
     MQTT_BROKER = "localhost"
     MQTT_PORT = 1883
@@ -35,6 +37,8 @@ class Command(BaseCommand):
         statuses = ["moving", "charging", "completed"]
         for status in statuses:
             time.sleep(random.randint(2, 5))  # Simulate movement and charging process
-            message = json.dumps({"botID": self.BOT_ID, "status": status, "spotID": spot_id})
+            message = json.dumps(
+                {"botID": self.BOT_ID, "status": status, "spotID": spot_id}
+            )
             self.client.publish(f"mwbot/status/{self.BOT_ID}", message)
             print(f"MWbot updated status: {status}")
