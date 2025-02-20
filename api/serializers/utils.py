@@ -13,7 +13,6 @@ def get_user_data(user):
         return None
     data = {
         "id": user.id,
-        "organization_id": user.organization.id,
         "username": user.username,
         "name": user.name,
         "role": user.role.code_name if user.role else None,
